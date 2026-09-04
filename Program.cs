@@ -1,4 +1,5 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Numerics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Adv_03
 {
@@ -35,6 +36,51 @@ namespace Adv_03
             List<string> gradeStrings = grades.Select(g => $"Grade: {g}").ToList();
             Console.WriteLine($"\nGrade strings: {string.Join(", ", gradeStrings)}");
             #endregion
+
+
+            #region task 2
+            //  Create a leaderboard that automatically sorts players by score.
+            //1.Add: 500 = "Ahmed", 200 = "Sara", 800 = "Ali", 350 = "Mona"
+            SortedDictionary<int, string> leaderboard = new SortedDictionary<int, string>();
+            leaderboard.Add(500, "Ahmed");
+            leaderboard.Add(200, "Sara");
+            leaderboard.Add(800, "Ali");
+            leaderboard.Add(350, "Mona");
+            //2.Print all entries(they should be sorted by score automatically)
+            Console.WriteLine("Leaderboard:");
+            foreach (KeyValuePair<int, string>  player in leaderboard.OrderByDescending(x => x.Key))
+            {
+                Console.WriteLine($"{player.Value}: {player.Key}");
+            }
+            //3.Access the first key and first value
+            int firstKey = leaderboard.First().Key;
+            string firstValue = leaderboard.First().Value;
+            Console.WriteLine($"First Key: {firstKey} First Value: {firstValue}");
+
+            //4.Check if score 500 exists
+            bool exists = leaderboard.ContainsKey(500);
+            Console.WriteLine($"Does score 500 exist? {exists}");
+
+            //5.Safely get the player with score 999
+            if (leaderboard.TryGetValue(999, out string playerName))
+            {
+                Console.WriteLine($"Player with score 999: {playerName}");
+            }
+            else
+            {
+                Console.WriteLine("No player with score 999 found.");
+            }
+            //6.Remove the player with score 200 and print the updated list
+            leaderboard.Remove(200);
+            Console.WriteLine("Updated Leaderboard after removing score 200:");
+
+            foreach (KeyValuePair<int, string> player in leaderboard)
+            {
+                Console.WriteLine($"{player.Value}: {player.Key}");
+            }
+            #endregion
+
+
         }
     }
 }
